@@ -55,12 +55,6 @@ build CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj: CXX
   OBJECT_DIR = CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir
   OBJECT_FILE_DIR = CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir
 
-build CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/Sort.cpp.obj: CXX_COMPILER__BUAA_ProgrammingAndAlgorithms_TermProject_Debug F$:/Projects/BUAA_ProgrammingAndAlgorithms_TermProject/Sort.cpp || cmake_object_order_depends_target_BUAA_ProgrammingAndAlgorithms_TermProject
-  DEP_FILE = CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\Sort.cpp.obj.d
-  FLAGS = -g -std=gnu++23
-  OBJECT_DIR = CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir
-  OBJECT_FILE_DIR = CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target BUAA_ProgrammingAndAlgorithms_TermProject
@@ -69,7 +63,7 @@ build CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/Sort.cpp.obj: CXX
 #############################################
 # Link the executable BUAA_ProgrammingAndAlgorithms_TermProject.exe
 
-build BUAA_ProgrammingAndAlgorithms_TermProject.exe: CXX_EXECUTABLE_LINKER__BUAA_ProgrammingAndAlgorithms_TermProject_Debug CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/Sort.cpp.obj
+build BUAA_ProgrammingAndAlgorithms_TermProject.exe: CXX_EXECUTABLE_LINKER__BUAA_ProgrammingAndAlgorithms_TermProject_Debug CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir

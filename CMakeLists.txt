@@ -3,4 +3,4 @@ project(BUAA_ProgrammingAndAlgorithms_TermProject)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(BUAA_ProgrammingAndAlgorithms_TermProject main.cpp HighPrecisionNumber.h Sort.cpp Sort.h)
+add_executable(BUAA_ProgrammingAndAlgorithms_TermProject main.cpp HighPrecisionNumber.h Sort.h)

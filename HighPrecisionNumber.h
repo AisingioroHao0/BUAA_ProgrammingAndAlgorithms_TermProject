@@ -12,10 +12,6 @@ class HighPrecisionNumber {
     {
 
     }
-    bool opeartor <(const HighPrecisionNumber& x)const
-    {
-
-    }
 };
 
 

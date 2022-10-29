@@ -5,16 +5,70 @@
 #ifndef BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
 #define BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
 #include <vector>
+#include <functional>
 template<typename T>
 class Sort {
 public:
-    static void SelectionSort(std::vector<T> data);
-    static void MergeSort(std::vector<T> data);
-    static void QuickSort(std::vector<T> data);
-    static void ShellSort(std::vector<T> data);
-    static void RadixSort(std::vector<T> data);
+    static void SelectionSort(std::vector<T> &data);
+    static std::vector<T> MergeSortBuffer;
+    static void MergeSort(std::vector<T> &data);
+    static void QuickSort(std::vector<T> &data);
+    static void ShellSort(std::vector<T> &data);
+    static void RadixSort(std::vector<T> &data);
 
 };
+
+template<typename T>
+void Sort<T>::SelectionSort(std::vector<T> &data) {
+
+}
+template<typename T>
+std::vector<T> Sort<T>::MergeSortBuffer;
+template<typename T>
+void Sort<T>::MergeSort(std::vector<T> &data) {
+    static std::function<void(int l,int r)> merge_sort=[&data](int l,int r) {
+        if (l >= r)return;
+        int mid = (l + r) / 2;
+        merge_sort(l, mid);
+        merge_sort(mid + 1, r);
+        int i = l, j = mid + 1, p = l;
+        while (i <= mid && j <= r) {
+            if (data[i] <= data[j]) {
+                MergeSortBuffer[p++] = data[i++];
+            } else {
+                MergeSortBuffer[p++] = data[j++];
+            }
+        }
+        while (i <= mid) {
+            MergeSortBuffer[p++] = data[i++];
+        }
+        while (j <= r) {
+            MergeSortBuffer[p++] = data[j++];
+        }
+        for (i = l; i <= r; i++) {
+            data[i] = MergeSortBuffer[i];
+        }
+    };
+    if (MergeSortBuffer.size() < data.size()) {
+        MergeSortBuffer.resize(data.size());
+    }
+    merge_sort(0,data.size()-1);
+}
+
+template<typename T>
+void Sort<T>::QuickSort(std::vector<T> &data) {
+
+}
+
+template<typename T>
+void Sort<T>::RadixSort(std::vector<T> &data) {
+
+}
+
+template<typename T>
+void Sort<T>::ShellSort(std::vector<T> &data) {
+
+}
 
 
 #endif //BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
