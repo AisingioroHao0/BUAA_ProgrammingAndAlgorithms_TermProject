@@ -29,6 +29,6 @@ bool Judge(vector<T> data)
 vector<int> TestData;
 int main() {
     GenerateData(TestData,1e6);
-    Sort<int>::MergeSort(TestData);
+    Sort<int>::RadixSort(TestData);
     cout<<Judge(TestData);
 }

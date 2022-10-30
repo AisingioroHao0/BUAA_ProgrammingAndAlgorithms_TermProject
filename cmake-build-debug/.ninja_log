@@ -1,11 +1,9 @@
 # ninja log v5
-2	535	6887390659703469	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj	c9751f68351fbe2f
-438	539	6886744417757366	BUAA_ProgrammingAndAlgorithms_TermProject.exe	2fa490dc9d4b5da4
-20	492	6887390532280422	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/Sort.cpp.obj	170fc9346755abcb
-1	220	6887395604854070	build.ninja	520e77b4596afe12
-2	655	6887395611871677	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj	c9751f68351fbe2f
-655	746	6887395612739978	BUAA_ProgrammingAndAlgorithms_TermProject.exe	2fa490dc9d4b5da4
-2	656	6887395719482703	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj	c9751f68351fbe2f
-657	746	6887395720343704	BUAA_ProgrammingAndAlgorithms_TermProject.exe	2fa490dc9d4b5da4
 2	721	6887396918074230	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj	c9751f68351fbe2f
 722	812	6887396918950192	BUAA_ProgrammingAndAlgorithms_TermProject.exe	2fa490dc9d4b5da4
+20	492	6887390532280422	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/Sort.cpp.obj	170fc9346755abcb
+1	220	6888269130103087	build.ninja	520e77b4596afe12
+2	1094	6888281804562750	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj	c9751f68351fbe2f
+1095	1340	6888281806982716	BUAA_ProgrammingAndAlgorithms_TermProject.exe	2fa490dc9d4b5da4
+2	952	6888281883204949	CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj	c9751f68351fbe2f
+952	1056	6888281884211769	BUAA_ProgrammingAndAlgorithms_TermProject.exe	2fa490dc9d4b5da4

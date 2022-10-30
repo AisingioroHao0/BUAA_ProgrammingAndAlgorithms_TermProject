@@ -6,6 +6,7 @@
 #define BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
 #include <vector>
 #include <functional>
+#include <thread>
 template<typename T>
 class Sort {
 public:
@@ -15,6 +16,7 @@ public:
     static void QuickSort(std::vector<T> &data);
     static void ShellSort(std::vector<T> &data);
     static void RadixSort(std::vector<T> &data);
+    static void MultiThreadRadixSort(std::vector<T> &data,int threadNums=std::thread::hardware_concurrency());
 
 };
 
@@ -59,16 +61,46 @@ template<typename T>
 void Sort<T>::QuickSort(std::vector<T> &data) {
 
 }
-
 template<typename T>
 void Sort<T>::RadixSort(std::vector<T> &data) {
-
+    std::vector<int> tmp[10];
+    int k = 0;
+    int MaxElement = data[0];
+    for (int i = 1; i < data.size(); i++) {
+        MaxElement = std::max(MaxElement, data[i]);
+    }
+    if (MaxElement) {
+        while (MaxElement) {
+            MaxElement /= 10;
+            k++;
+        }
+    } else {
+        k = 1;
+    }
+    for (int i = 1, x = 1; i <= k; i++, x *= 10) {
+        for (int j = 0; j < data.size(); j++) {
+            int v = (data[j] / x) % 10;
+            tmp[v].push_back(data[j]);
+        }
+        for (int j = 0, p = 0; j <= 9; j++) {
+            for (int l = 0; l < tmp[j].size(); l++) {
+                data[p++] = tmp[j][l];
+            }
+            tmp[j].clear();
+        }
+    }
 }
 
 template<typename T>
 void Sort<T>::ShellSort(std::vector<T> &data) {
 
 }
+
+template<typename T>
+void Sort<T>::MultiThreadRadixSort(std::vector<T> &data, int threadNums) {
+
+}
+
 
 
 #endif //BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
