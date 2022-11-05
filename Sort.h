@@ -65,13 +65,13 @@ template<typename T>
 void Sort<T>::RadixSort(std::vector<T> &data) {
     std::vector<int> tmp[10];
     int k = 0;
-    int MaxElement = data[0];
+    T max_element = data[0];
     for (int i = 1; i < data.size(); i++) {
-        MaxElement = std::max(MaxElement, data[i]);
+        max_element = std::max(max_element, data[i]);
     }
-    if (MaxElement) {
-        while (MaxElement) {
-            MaxElement /= 10;
+    if (max_element) {
+        while (max_element) {
+            max_element /= 10;
             k++;
         }
     } else {
