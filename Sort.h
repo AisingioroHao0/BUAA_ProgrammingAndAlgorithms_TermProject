@@ -46,7 +46,7 @@ void Sort<T>::SelectionSort(std::vector<T> &data) {
             }
         }
         //交换本趟排序的开始元素的下标和当前趟最小元素的下标的值
-        std::swap(data[i],data[min]);
+        std::swap(data[i], data[min]);
     }
 }
 
@@ -120,8 +120,27 @@ void Sort<T>::RadixSort(std::vector<T> &data) {
 }
 
 template<typename T>
+/**
+ * 希尔排序
+ * @tparam T 输入数据类型
+ * @param data 输入数据集合
+ */
 void Sort<T>::ShellSort(std::vector<T> &data) {
-
+    int n = data.size();
+    int inc;//希尔增量 步长
+    //这里采用朴素希尔增量，就是每次增量都是原来的一半，直到增量为1为止
+    for (inc = n / 2; inc >= 1; inc = inc / 2) {
+        //插入排序
+        for (int i = inc; i < n; i++) {
+            int temp = data[i];//temp存储要插入的值
+            int j;
+            //j从i-inc开始往前遍历，每一步的距离是inc
+            for (j = i - inc; j >= 0 && data[j] > temp; j = j - inc) {
+                data[j + inc] = data[j];
+            }
+            data[j + inc] = temp;
+        }
+    }
 }
 
 template<typename T>
