@@ -40,7 +40,7 @@ void Sort<T>::SelectionSort(std::vector<T> &data) {
         //当前趟最小元素下标
         int min = i;
         //寻找当前趟的最小元素，并将最小元素的下标赋值给min
-        for (int j = i + 1; j < n - i; j++) {
+        for (int j = i + 1; j < n; j++) {
             if (data[j] < data[min]) {
                 min = j;
             }
