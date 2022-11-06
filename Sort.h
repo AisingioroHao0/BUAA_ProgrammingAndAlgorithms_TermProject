@@ -4,31 +4,55 @@
 
 #ifndef BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
 #define BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
+
 #include <vector>
 #include <functional>
 #include <thread>
+
 template<typename T>
 class Sort {
 public:
     static void SelectionSort(std::vector<T> &data);
+
     static std::vector<T> MergeSortBuffer;
+
     static void MergeSort(std::vector<T> &data);
+
     static void QuickSort(std::vector<T> &data);
+
     static void ShellSort(std::vector<T> &data);
+
     static void RadixSort(std::vector<T> &data);
-    static void MultiThreadRadixSort(std::vector<T> &data,int threadNums=std::thread::hardware_concurrency());
+
+    static void MultiThreadRadixSort(std::vector<T> &data, int threadNums = std::thread::hardware_concurrency());
 
 };
 
 template<typename T>
+/**
+ * 选择排序
+ * @tparam T 传入数据类型
+ * @param data 传入的数据集合
+ */
 void Sort<T>::SelectionSort(std::vector<T> &data) {
-
+    int n = data.size();
+    for (int i = 0; i < n - 1; i++) {
+        int min = i;
+        for (int j = i + 1; j < n - i; j++) {
+            if (data[j] < data[min]) {
+                min = j;
+            }
+        }
+        std::swap(data[i],data[min]);
+    }
 }
+
 template<typename T>
 std::vector<T> Sort<T>::MergeSortBuffer;
+
 template<typename T>
 void Sort<T>::MergeSort(std::vector<T> &data) {
-    static std::function<void(int l,int r)> merge_sort=[&data](int l,int r) {
+    static std::function<void(int l, int r)> merge_sort = [&data](int l, int r) {
         if (l >= r)return;
         int mid = (l + r) / 2;
         merge_sort(l, mid);
@@ -54,13 +78,14 @@ void Sort<T>::MergeSort(std::vector<T> &data) {
     if (MergeSortBuffer.size() < data.size()) {
         MergeSortBuffer.resize(data.size());
     }
-    merge_sort(0,data.size()-1);
+    merge_sort(0, data.size() - 1);
 }
 
 template<typename T>
 void Sort<T>::QuickSort(std::vector<T> &data) {
 
 }
+
 template<typename T>
 void Sort<T>::RadixSort(std::vector<T> &data) {
     std::vector<int> tmp[10];
@@ -100,7 +125,6 @@ template<typename T>
 void Sort<T>::MultiThreadRadixSort(std::vector<T> &data, int threadNums) {
 
 }
-
 
 
 #endif //BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
