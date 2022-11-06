@@ -33,5 +33,7 @@ vector<long long> TestData;
 int main() {
     GenerateData(TestData,1e5);
     Sort<long long>::MergeSort(TestData);
+    Sort<long long>::SelectionSort(TestData);
+    Sort<long long>::ShellSort(TestData);
     cout<<Judge(TestData);
 }
