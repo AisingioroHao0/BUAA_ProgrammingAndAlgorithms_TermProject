@@ -18,7 +18,7 @@ void GenerateData(vector<long long> &data,int n)
     }
 }
 template<typename T>
-bool Judge(vector<T> data)
+bool Judge(vector<T> &data)
 {
     for(int i=0;i<data.size()-1;i++)
     {
@@ -31,9 +31,10 @@ bool Judge(vector<T> data)
 }
 vector<long long> TestData;
 int main() {
+
     GenerateData(TestData,1e5);
     Sort<long long>::MergeSort(TestData);
-    Sort<long long>::SelectionSort(TestData);
-    Sort<long long>::ShellSort(TestData);
+    //Sort<long long>::SelectionSort(TestData);
+    //Sort<long long>::ShellSort(TestData);
     cout<<Judge(TestData);
 }
