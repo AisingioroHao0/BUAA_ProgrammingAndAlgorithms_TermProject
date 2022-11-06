@@ -37,12 +37,15 @@ template<typename T>
 void Sort<T>::SelectionSort(std::vector<T> &data) {
     int n = data.size();
     for (int i = 0; i < n - 1; i++) {
+        //当前趟最小元素下标
         int min = i;
+        //寻找当前趟的最小元素，并将最小元素的下标赋值给min
         for (int j = i + 1; j < n - i; j++) {
             if (data[j] < data[min]) {
                 min = j;
             }
         }
+        //交换本趟排序的开始元素的下标和当前趟最小元素的下标的值
         std::swap(data[i],data[min]);
     }
 }
