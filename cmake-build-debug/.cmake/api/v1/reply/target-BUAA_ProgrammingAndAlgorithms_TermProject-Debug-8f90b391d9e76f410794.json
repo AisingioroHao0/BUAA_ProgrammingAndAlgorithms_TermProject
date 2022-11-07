@@ -100,7 +100,8 @@
 			"sourceIndexes" : 
 			[
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -120,6 +121,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "Sort.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "ThreadPool.h",
 			"sourceGroupIndex" : 1
 		}
 	],

@@ -24,7 +24,6 @@ public:
 
     static void RadixSort(std::vector<T> &data);
 
-    static void MultiThreadRadixSort(std::vector<T> &data, int threadNums = std::thread::hardware_concurrency());
 
 };
 
@@ -143,11 +142,6 @@ void Sort<T>::ShellSort(std::vector<T> &data) {
             data[j + inc] = temp;
         }
     }
-}
-
-template<typename T>
-void Sort<T>::MultiThreadRadixSort(std::vector<T> &data, int threadNums) {
-
 }
 
 
