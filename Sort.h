@@ -62,10 +62,12 @@ void Sort<T>::MergeSort(std::vector<T> &data) {
         merge_sort(mid + 1, r);
         int i = l, j = mid + 1, p = l;
         while (i <= mid && j <= r) {
-            if (data[i] <= data[j]) {
-                MergeSortBuffer[p++] = data[i++];
-            } else {
+            if(data[i]>data[j])
+            {
                 MergeSortBuffer[p++] = data[j++];
+            }
+            else {
+                MergeSortBuffer[p++] = data[i++];
             }
         }
         while (i <= mid) {
