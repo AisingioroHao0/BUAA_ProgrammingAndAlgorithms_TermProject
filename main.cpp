@@ -4,8 +4,32 @@
 #include <fstream>
 #include "Sort.h"
 #include "HighPrecisionNumber.h"
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <sys/time.h>
+#include <pthread.h>
+#include <algorithm>
+#include<ThreadSort.h>
 using namespace std;
 template<typename T>
+const long MAX = 1e7L; // max num in array
+const long long MAX_NUM = 1e8L;  // num of element to sort
+const int thread = 100;
+const int thread_num = MAX_NUM / thread;
+
+int num[MAX_NUM];
+int tmp_num[MAX_NUM];
+
+pthread_barrier_t barrier;  // barrier
+
+
+
+
+
+
+
+
 bool Judge(vector<T> &data)
 {
     for(int i=0;i<data.size()-1;i++)
@@ -79,6 +103,9 @@ void TestHighPrecisionNumber(int n)
     Sort::MergeSort(test_data);
     cout<<Judge(test_data);
 }
+
 int main() {
-    TestSort<long long>(10000000, Sort::MultiThreadQuickSortByAsync<long long>);
+    //TestHighPrecisionNumber(1e6);
+    ThreadSort();
 }
+
