@@ -17,17 +17,20 @@ bool Judge(vector<T> &data)
     }
     return true;
 }
-void TestSort(int n,function<void(vector<long long>&)> sort_function)
+template<typename T>
+void TestSort(int n,function<void(vector<T>&)> sort_function)
 {
     vector<long long > test_data(n);
     static default_random_engine random_engine;
-    static uniform_int_distribution<long long> random_range(LONG_LONG_MIN, LONG_LONG_MAX);
+    static uniform_int_distribution<long long> random_range(1, 10);
     for(int i=0;i<n;i++)
     {
-
         test_data[i]=random_range(random_engine);
     }
+    auto start_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     sort_function(test_data);
+    auto end_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
     cout<<Judge(test_data);
 }
 void TestHighPrecisionNumber(int n)
@@ -73,9 +76,9 @@ void TestHighPrecisionNumber(int n)
         out_stream<<res<<'\n';
     }
     out_stream.close();
-    Sort<HighPrecisionNumber>::MergeSort(test_data);
+    Sort::MergeSort(test_data);
     cout<<Judge(test_data);
 }
 int main() {
-    TestHighPrecisionNumber(1e6);
+    TestSort<long long>(10000000, Sort::MultiThreadQuickSortByAsync<long long>);
 }

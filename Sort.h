@@ -8,22 +8,28 @@
 #include <vector>
 #include <functional>
 #include <thread>
+#include <future>
 
-template<typename T>
+
 class Sort {
 public:
+    template<typename T>
     static void SelectionSort(std::vector<T> &data);
 
-    static std::vector<T> MergeSortBuffer;
-
+    template<typename T>
     static void MergeSort(std::vector<T> &data);
 
+    template<typename T>
     static void QuickSort(std::vector<T> &data);
 
+    template<typename T>
     static void ShellSort(std::vector<T> &data);
 
+    template<typename T>
     static void RadixSort(std::vector<T> &data);
 
+    template<typename T>
+    static void MultiThreadQuickSortByAsync(std::vector<T> &data);
 
 };
 
@@ -33,7 +39,7 @@ template<typename T>
  * @tparam T 传入数据类型
  * @param data 传入的数据集合
  */
-void Sort<T>::SelectionSort(std::vector<T> &data) {
+void Sort::SelectionSort(std::vector<T> &data) {
     int n = data.size();
     for (int i = 0; i < n - 1; i++) {
         //当前趟最小元素下标
@@ -50,11 +56,9 @@ void Sort<T>::SelectionSort(std::vector<T> &data) {
 }
 
 template<typename T>
-std::vector<T> Sort<T>::MergeSortBuffer;
-
-template<typename T>
-void Sort<T>::MergeSort(std::vector<T> &data) {
-    static std::function<void(int l, int r)> merge_sort = [&data](int l, int r) {
+void Sort::MergeSort(std::vector<T> &data) {
+    std::vector<T> MergeSortBuffer(data.size());
+    static std::function<void(int l, int r)> merge_sort = [&data,&MergeSortBuffer](int l, int r) {
         if (l >= r)return;
         int mid = (l + r) / 2;
         merge_sort(l, mid);
@@ -84,14 +88,39 @@ void Sort<T>::MergeSort(std::vector<T> &data) {
     }
     merge_sort(0, data.size() - 1);
 }
-
 template<typename T>
-void Sort<T>::QuickSort(std::vector<T> &data) {
-
+static void quick_sort(std::vector<T> &data,int l,int r)
+{
+    if(l>=r)return;
+    std::swap(data[l],data[l+rand()%(r-l+1)]);
+    int bound1=l,bound2=r+1,i=l+1;
+    while(i<bound2)
+    {
+        if(data[i]<data[l])
+        {
+            std::swap(data[i],data[++bound1]);
+            i++;
+        }
+        else if(data[i]>data[l])
+        {
+            std::swap(data[i],data[--bound2]);
+        }
+        else
+        {
+            i++;
+        }
+    }
+    std::swap(data[l],data[bound1]);
+    quick_sort(data,l,bound1-1);
+    quick_sort(data,bound2,r);
+}
+template<typename T>
+void Sort::QuickSort(std::vector<T> &data) {
+    quick_sort(data,0,data.size()-1);
 }
 
 template<typename T>
-void Sort<T>::RadixSort(std::vector<T> &data) {
+void Sort::RadixSort(std::vector<T> &data) {
     std::vector<int> tmp[10];
     int k = 0;
     T max_element = data[0];
@@ -126,7 +155,7 @@ template<typename T>
  * @tparam T 输入数据类型
  * @param data 输入数据集合
  */
-void Sort<T>::ShellSort(std::vector<T> &data) {
+void Sort::ShellSort(std::vector<T> &data) {
     int n = data.size();
     int inc;//希尔增量 步长
     //这里采用朴素希尔增量，就是每次增量都是原来的一半，直到增量为1为止
@@ -142,6 +171,38 @@ void Sort<T>::ShellSort(std::vector<T> &data) {
             data[j + inc] = temp;
         }
     }
+}
+template<typename T>
+static void multi_thread_quick_sort_by_async(std::vector<T> &data,int l,int r) {
+    if(l>=r)return;
+    std::swap(data[l],data[l+rand()%(r-l+1)]);
+    int bound1=l,bound2=r+1,i=l+1;
+    while(i<bound2)
+    {
+        if(data[i]<data[l])
+        {
+            std::swap(data[i],data[++bound1]);
+            i++;
+        }
+        else if(data[i]>data[l])
+        {
+            std::swap(data[i],data[--bound2]);
+        }
+        else
+        {
+            i++;
+        }
+    }
+    std::swap(data[l],data[bound1]);
+    auto res1=std::async(std::launch::deferred | std::launch::async,multi_thread_quick_sort_by_async<T>,std::ref(data),l,bound1-1);
+    auto res2=std::async(std::launch::deferred | std::launch::async,multi_thread_quick_sort_by_async<T>,std::ref(data),bound2,r);
+    res1.get();
+    res2.get();
+}
+template<typename T>
+void Sort::MultiThreadQuickSortByAsync(std::vector<T> &data) {
+    auto res=std::async(std::launch::async,multi_thread_quick_sort_by_async<T>,std::ref(data), 0, data.size() - 1);
+    res.get();
 }
 
 
