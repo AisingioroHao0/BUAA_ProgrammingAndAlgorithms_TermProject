@@ -23,6 +23,9 @@ public:
     static void QuickSort(std::vector<T> &data);
 
     template<typename T>
+    static void QuickSortSimple(std::vector<T> &data, int begin, int end);
+
+    template<typename T>
     static void ShellSort(std::vector<T> &data);
 
     template<typename T>
@@ -41,7 +44,7 @@ template<typename T>
  */
 void Sort::SelectionSort(std::vector<T> &data) {
     int n = data.size();
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 0; i < n; i++) {
         //当前趟最小元素下标
         int min = i;
         //寻找当前趟的最小元素，并将最小元素的下标赋值给min
@@ -117,6 +120,67 @@ static void quick_sort(std::vector<T> &data,int l,int r)
 template<typename T>
 void Sort::QuickSort(std::vector<T> &data) {
     quick_sort(data,0,data.size()-1);
+}
+
+/**
+ * 快速排序
+ * @tparam T 泛型
+ * @param data 输入数据
+ */
+template<typename T>
+void Sort::QuickSortSimple(std::vector<T> &data, int begin, int end) {
+
+    //分治中的治：具体的解决最子问题的逻辑  对比和归并排序：归并排序是先分后治。快速排序是先治后分
+    //分的结束条件是begin >= end
+    // （比如 2 1 3 子问题1 begin = 0 end = 0 则这个子问题等于已经解出）
+    // (比如 2 1 子问题1 begin = 0 end = 0 子问题2 begin = 2 end = 1)
+    if (begin < end) {
+        //设置枢轴
+        int key = data[begin];
+        //设置正向游标
+        int i = begin;
+        //设置反向游标
+        int j = end;
+
+        //在子问题里面结束条件是 正向游标大于或等于负向游标，否则这个子问题就是还未解完。
+        while (i < j) {
+
+            //如果，正向游标 < 负向游标 并且 负向游标所在位置的值大于枢轴，则负向游标向正向游标前进，结束条件是负向游标查到了第一个小于枢轴的值
+            while (i < j && data[j] > key) {
+                //上述：负向游标向正向游标前进
+                j--;
+            }
+
+            //负向游标所指向的值，第一个小于枢轴的值查到后，将其赋给正向游标所指向的值
+            // （这时逻辑上，负向游标所指向的值应该设置为空，只不过不做这个操作也不影响逻辑执行结果）
+            if (i < j) {
+                data[i] = data[j];
+                //正向游标向负向游标前进一步
+                i++;
+            }
+
+            //如果，正向游标 < 负向游标 并且 正向游标所在位置的值小于枢轴，则正向游标向负向游标前进，结束条件是正向游标查到了第一个大于枢轴的值
+            while (i < j && data[i] < key) {
+                //上述：正向游标向负向游标前进
+                i++;
+            }
+
+            //正向游标所指向的值，第一个大于枢轴的值查到后，将其赋给负向游标所指向的值
+            // （这时逻辑上，正向游标所指向的值应该设置为空，只不过不做这个操作也不影响逻辑执行结果：注意这也就是为什么最后是将枢轴的值赋给i不是赋值给j）
+            if (i < j) {
+                data[j] = data[i];
+                //负向游标向正向游标前进一步
+                j--;
+            }
+
+        }
+
+        //将枢轴的值赋给 正向游标所指向的值。（此时i+1 = j了） 此时子问题解决
+        data[i] = key;
+        QuickSort(data, begin, i - 1);
+        QuickSort(data, i + 1, end);
+    }
+
 }
 
 template<typename T>
