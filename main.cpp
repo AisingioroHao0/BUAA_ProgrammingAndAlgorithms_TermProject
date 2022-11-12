@@ -8,27 +8,9 @@
 #include <cstring>
 #include <cstdlib>
 #include <sys/time.h>
-#include <pthread.h>
 #include <algorithm>
-#include<ThreadSort.h>
 using namespace std;
 template<typename T>
-const long MAX = 1e7L; // max num in array
-const long long MAX_NUM = 1e8L;  // num of element to sort
-const int thread = 100;
-const int thread_num = MAX_NUM / thread;
-
-int num[MAX_NUM];
-int tmp_num[MAX_NUM];
-
-pthread_barrier_t barrier;  // barrier
-
-
-
-
-
-
-
 
 bool Judge(vector<T> &data)
 {
@@ -41,6 +23,7 @@ bool Judge(vector<T> &data)
     }
     return true;
 }
+
 template<typename T>
 void TestSort(int n,function<void(vector<T>&)> sort_function)
 {
@@ -57,6 +40,7 @@ void TestSort(int n,function<void(vector<T>&)> sort_function)
     cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
     cout<<Judge(test_data);
 }
+
 void TestHighPrecisionNumber(int n)
 {
     static default_random_engine random_engine;
@@ -100,12 +84,12 @@ void TestHighPrecisionNumber(int n)
         out_stream<<res<<'\n';
     }
     out_stream.close();
-    Sort::MergeSort(test_data);
+    //Sort::MergeSort(test_data);
+    Sort::MultiThreadMergeSortByAsync(test_data);
     cout<<Judge(test_data);
 }
 
 int main() {
-    //TestHighPrecisionNumber(1e6);
-    ThreadSort();
+    TestHighPrecisionNumber(1e6);
 }
 

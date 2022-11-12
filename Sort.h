@@ -35,6 +35,9 @@ public:
     static void MultiThreadQuickSortByAsync(std::vector<T> &data);
     template<typename T>
     static void MultiThreadMergeSortByAsync(std::vector<T> &data);
+    template<typename T>
+    static void MultiThreadShellSortByAsync(std::vector<T> &data);
+
 };
 
 template<typename T>
@@ -271,9 +274,26 @@ void Sort::MultiThreadQuickSortByAsync(std::vector<T> &data) {
 }
 
 template<typename T>
-void Sort::MultiThreadMergeSortByAsync(std::vector<T> &data){
-    auto res=std::async(std::launch::async,multi_thread_merge_sort_by_async<T>,std::ref(data), 0, data.size() - 1);
-    res.get();
+static void merge(std::vector<T>&data,int l,int mid,int r){
+    int i=l,j=mid+1,k=0; //mid+1为第2有序区第1个元素，j指向第1个元素
+    int *temp=new int[r-l+1]; //temp数组暂存合并的有序序列
+    if(!temp){ //内存分配失败
+        //cout<<"error";
+        return;
+    }
+    while(i<=mid&&j<=r){
+        if(data[i]<=data[j]) //较小的先存入temp中
+            temp[k++]=data[i++];
+        else
+            temp[k++]=data[j++];
+    }
+    while(i<=mid)//若比较完之后，第一个有序区仍有剩余，则直接复制到t数组中
+        temp[k++]=data[i++];
+    while(j<=r)//同上
+        temp[k++]=data[j++];
+    for(i=l,k=0;i<=r;i++,k++)
+		data[i]=temp[k];
+    delete []temp;//删除指针，由于指向的是数组，必须用delete []
 }
 template<typename T>
 static void multi_thread_merge_sort_by_async(std::vector<T> &data,int l,int r){
@@ -285,34 +305,12 @@ static void multi_thread_merge_sort_by_async(std::vector<T> &data,int l,int r){
     }
 }
 template<typename T>
-static void merge(std::vector<T>&data,int l,int mid,int r){
-    int i=l,j=mid+1,k=0; //mid+1为第2有序区第1个元素，j指向第1个元素
-    int *temp=new(nothrow) int[r-l+1]; //temp数组暂存合并的有序序列
-    if(!temp){ //内存分配失败
-        cout<<"error";
-        return;
-    }
-    while(i<=mid&&j<=r){
-        if(data[i]<=data[j]) //较小的先存入temp中
-            temp[k++]=data[i++];
-        else
-            temp[k++]=data[j++];
-    }
-    while(i<=mid)//若比较完之后，第一个有序区仍有剩余，则直接复制到t数组中
-        temp[k++]=data[i++];
-    while(j<=high)//同上
-        temp[k++]=data[j++];
-    for(i=low,k=0;i<=high;i++,k++)//将排好序的存回arr中low到high这区间
-		data[i]=temp[k];
-    delete []temp;//删除指针，由于指向的是数组，必须用delete []
-}
-
-template<typename T>
-void Sort::MultiThreadShellSortByAsync(std::vector<T> &data)
-{
-    auto res=std::async(std::launch::async,multi_thread_shell_sort_by_async<T>,std::ref(data), 0, data.size() - 1);
+void Sort::MultiThreadMergeSortByAsync(std::vector<T> &data){
+    auto res=std::async(std::launch::async,multi_thread_merge_sort_by_async<T>,std::ref(data), 0, data.size() - 1);
     res.get();
 }
+
+
 template<typename T>
 static void multi_thread_shell_sort_by_async(std::vector<T> &data,int n)
 {
@@ -340,5 +338,12 @@ static void multi_thread_shell_sort_by_async(std::vector<T> &data,int n)
         }
     }
 }
+template<typename T>
+void Sort::MultiThreadShellSortByAsync(std::vector<T> &data)
+{
+    auto res=std::async(std::launch::async,multi_thread_shell_sort_by_async<T>,std::ref(data), 0, data.size() - 1);
+    res.get();
+}
+
 
 #endif //BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
