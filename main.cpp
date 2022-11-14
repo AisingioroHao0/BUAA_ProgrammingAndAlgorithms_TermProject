@@ -4,14 +4,9 @@
 #include <fstream>
 #include "Sort.h"
 #include "HighPrecisionNumber.h"
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
-#include <sys/time.h>
 #include <algorithm>
 using namespace std;
 template<typename T>
-
 bool Judge(vector<T> &data)
 {
     for(int i=0;i<data.size()-1;i++)
@@ -29,7 +24,7 @@ void TestSort(int n,function<void(vector<T>&)> sort_function)
 {
     vector<long long > test_data(n);
     static default_random_engine random_engine;
-    static uniform_int_distribution<long long> random_range(1, 10);
+    static uniform_int_distribution<long long> random_range(LONG_LONG_MIN, LONG_LONG_MAX);
     for(int i=0;i<n;i++)
     {
         test_data[i]=random_range(random_engine);
@@ -38,7 +33,7 @@ void TestSort(int n,function<void(vector<T>&)> sort_function)
     sort_function(test_data);
     auto end_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
-    cout<<Judge(test_data);
+    cout<<Judge(test_data)<<'\n';
 }
 
 void TestHighPrecisionNumber(int n)
@@ -84,12 +79,13 @@ void TestHighPrecisionNumber(int n)
         out_stream<<res<<'\n';
     }
     out_stream.close();
-    //Sort::MergeSort(test_data);
-    Sort::MultiThreadMergeSortByAsync(test_data);
-    cout<<Judge(test_data);
+    Sort::MergeSort(test_data);
+    cout<<Judge(test_data)<<'\n';
 }
 
 int main() {
-    TestHighPrecisionNumber(1e6);
+    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
+    TestSort<long long>(1e6,Sort::QuickSort<long long>);
+    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
 }
 

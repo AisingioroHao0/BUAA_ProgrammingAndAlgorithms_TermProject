@@ -9,6 +9,7 @@
 #include <functional>
 #include <thread>
 #include <future>
+#include "ThreadPool.h"
 
 
 class Sort {
@@ -240,37 +241,47 @@ void Sort::ShellSort(std::vector<T> &data) {
         }
     }
 }
+static int single_task_len_MTQSBA;
 template<typename T>
 static void multi_thread_quick_sort_by_async(std::vector<T> &data,int l,int r) {
-    if(l>=r)return;
-    std::swap(data[l],data[l+rand()%(r-l+1)]);
-    int bound1=l,bound2=r+1,i=l+1;
-    while(i<bound2)
+    if(l<r)
     {
-        if(data[i]<data[l])
+        std::swap(data[l],data[l+rand()%(r-l+1)]);
+        int bound1=l,bound2=r+1,i=l+1;
+        while(i<bound2)
         {
-            std::swap(data[i],data[++bound1]);
-            i++;
+            if(data[i]<data[l])
+            {
+                std::swap(data[i],data[++bound1]);
+                i++;
+            }
+            else if(data[i]>data[l])
+            {
+                std::swap(data[i],data[--bound2]);
+            }
+            else
+            {
+                i++;
+            }
         }
-        else if(data[i]>data[l])
+        std::swap(data[l],data[bound1]);
+        if(bound1-l+r-bound2+1 > single_task_len_MTQSBA)
         {
-            std::swap(data[i],data[--bound2]);
+            auto res = std::async(multi_thread_quick_sort_by_async<T>, std::ref(data), l, bound1 - 1);
+            multi_thread_quick_sort_by_async(data, bound2, r);
+            res.get();
         }
         else
         {
-            i++;
+            multi_thread_quick_sort_by_async(data,l,bound1-1);
+            multi_thread_quick_sort_by_async(data,bound2,r);
         }
     }
-    std::swap(data[l],data[bound1]);
-    auto res1=std::async(std::launch::deferred | std::launch::async,multi_thread_quick_sort_by_async<T>,std::ref(data),l,bound1-1);
-    auto res2=std::async(std::launch::deferred | std::launch::async,multi_thread_quick_sort_by_async<T>,std::ref(data),bound2,r);
-    res1.get();
-    res2.get();
 }
 template<typename T>
 void Sort::MultiThreadQuickSortByAsync(std::vector<T> &data) {
-    auto res=std::async(std::launch::async,multi_thread_quick_sort_by_async<T>,std::ref(data), 0, data.size() - 1);
-    res.get();
+    single_task_len_MTQSBA= data.size() / std::thread::hardware_concurrency();
+    multi_thread_quick_sort_by_async(data,0,data.size()-1);
 }
 
 template<typename T>
