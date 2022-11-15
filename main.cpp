@@ -87,5 +87,6 @@ int main() {
     cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
     TestSort<long long>(1e6,Sort::QuickSort<long long>);
     TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
+    TestSort<long long>(1e6,Sort::QuickSortForSimple<long long>);
 }
 
