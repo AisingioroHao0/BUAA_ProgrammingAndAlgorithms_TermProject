@@ -1,10 +1,26 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <ctime>
 #include <fstream>
 #include "Sort.h"
+#include <ctime>
+#include <fstream>
 #include "HighPrecisionNumber.h"
 #include <algorithm>
+#include "ExternSort.h"
+const unsigned int Fcount = 10000000; // 文件里数据的行数
+const unsigned int number_to_sort = 1000000; //在内存中一次排序的数量
+const char *unsort_file = "unsort_data.txt"; //原始未排序的文件名
+const char *sort_file = "sort_data.txt"; //已排序的文件名
+void init_data(unsigned int num); //随机生成数据文件
+void init_data(unsigned int num)
+{
+    FILE* f = fopen(unsort_file, "wt");
+    for(int i = 0; i < num; ++i)
+        fprintf(f, "%d ", rand());
+    fclose(f);
+}
 using namespace std;
 template<typename T>
 bool Judge(vector<T> &data)
@@ -84,9 +100,15 @@ void TestHighPrecisionNumber(int n)
 }
 
 int main() {
-    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
-    TestSort<long long>(1e6,Sort::QuickSort<long long>);
-    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
-    TestSort<long long>(1e6,Sort::QuickSortForSimple<long long>);
+//    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
+//    TestSort<long long>(1e6,Sort::QuickSort<long long>);
+//    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
+//    TestSort<long long>(1e6,Sort::QuickSortForSimple<long long>);
+    srand(time(NULL));
+    init_data(Fcount);
+    ExternSort extSort(unsort_file, sort_file, number_to_sort);
+    extSort.sort();
+    system("pause");
+    return 0;
 }
 

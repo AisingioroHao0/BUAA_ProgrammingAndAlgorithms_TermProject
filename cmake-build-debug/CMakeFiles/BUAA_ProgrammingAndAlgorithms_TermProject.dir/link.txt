@@ -1,0 +1,3 @@
+"F:\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir/objects.a
+F:\CLION2~1.4\bin\mingw\bin\ar.exe qc CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir/objects.a @CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\objects1.rsp
+F:\CLION2~1.4\bin\mingw\bin\G__~1.EXE -g -Wl,--whole-archive CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir/objects.a -Wl,--no-whole-archive -o BUAA_ProgrammingAndAlgorithms_TermProject.exe -Wl,--out-implib,libBUAA_ProgrammingAndAlgorithms_TermProject.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\linklibs.rsp

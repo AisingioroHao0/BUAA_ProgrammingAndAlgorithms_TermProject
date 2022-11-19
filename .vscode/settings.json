@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "string": "cpp",
-        "*.tcc": "cpp",
-        "future": "cpp",
-        "new": "cpp"
-    }
-}
