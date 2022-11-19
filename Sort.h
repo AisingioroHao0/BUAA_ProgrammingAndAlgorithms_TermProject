@@ -53,12 +53,12 @@ template<typename T>
  * @param data 传入的数据集合
  */
 void Sort::SelectionSort(std::vector<T> &data) {
-    int n = data.size();
-    for (int i = 0; i < n; i++) {
+    long long n = data.size();
+    for (long long i = 0; i < n; i++) {
         //当前趟最小元素下标
-        int min = i;
+        long long min = i;
         //寻找当前趟的最小元素，并将最小元素的下标赋值给min
-        for (int j = i + 1; j < n; j++) {
+        for (long long j = i + 1; j < n; j++) {
             if (data[j] < data[min]) {
                 min = j;
             }
@@ -132,16 +132,16 @@ void Sort::QuickSort(std::vector<T> &data) {
  */
 template<typename T>
 void Sort::QuickSortForSimple(std::vector<T> &data) {
-    QuickSortSimple(data,0,data.size());
+    QuickSortSimple(data, 0, data.size());
 }
 
- /**
-  * 快速排序
-  * @tparam T 泛型
-  * @param data 输入数据
-  * @param begin 子问题起点下标
-  * @param end 子问题终点下标
-  */
+/**
+ * 快速排序
+ * @tparam T 泛型
+ * @param data 输入数据
+ * @param begin 子问题起点下标
+ * @param end 子问题终点下标
+ */
 template<typename T>
 void Sort::QuickSortSimple(std::vector<T> &data, long long begin, long long end) {
 
@@ -151,11 +151,11 @@ void Sort::QuickSortSimple(std::vector<T> &data, long long begin, long long end)
     // (比如 2 1 子问题1 begin = 0 end = 0 子问题2 begin = 2 end = 1)
     if (begin < end) {
         //设置枢轴
-        long long  key = data[begin];
+        long long key = data[begin];
         //设置正向游标
-        long long  i = begin;
+        long long i = begin;
         //设置反向游标
-        long long  j = end;
+        long long j = end;
 
         //在子问题里面结束条件是 正向游标大于或等于负向游标，否则这个子问题就是还未解完。
         while (i < j) {
@@ -235,14 +235,14 @@ template<typename T>
  * @param data 输入数据集合
  */
 void Sort::ShellSort(std::vector<T> &data) {
-    int n = data.size();
-    int inc;//希尔增量 步长
+    long long n = data.size();
+    long long inc;//希尔增量 步长
     //这里采用朴素希尔增量，就是每次增量都是原来的一半，直到增量为1为止
     for (inc = n / 2; inc >= 1; inc = inc / 2) {
         //插入排序
-        for (int i = inc; i < n; i++) {
-            int temp = data[i];//temp存储要插入的值
-            int j;
+        for (long long i = inc; i < n; i++) {
+            long long temp = data[i];//temp存储要插入的值
+            long long j;
             //j从i-inc开始往前遍历，每一步的距离是inc
             for (j = i - inc; j >= 0 && data[j] > temp; j = j - inc) {
                 data[j + inc] = data[j];

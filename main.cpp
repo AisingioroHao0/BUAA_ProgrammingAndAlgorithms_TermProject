@@ -100,6 +100,7 @@ void TestHighPrecisionNumber(int n)
 }
 
 int main() {
+<<<<<<< HEAD
 //    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
 //    TestSort<long long>(1e6,Sort::QuickSort<long long>);
 //    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
@@ -110,5 +111,13 @@ int main() {
     extSort.sort();
     system("pause");
     return 0;
+=======
+    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
+    //TestSort<long long>(1e6,Sort::QuickSort<long long>);
+    TestSort<long long>(1e8, Sort::MultiThreadQuickSortByAsync<long long>);
+    //TestSort<long long>(1e6,Sort::QuickSortForSimple<long long>);
+    //TestSort<long long>(1e6,Sort::ShellSort<long long>);
+    //TestSort<long long>(1e4,Sort::SelectionSort<long long>);
+>>>>>>> 1a2a4d3560500aabdd8e40e63b7e7c0d6dc167b3
 }
 
