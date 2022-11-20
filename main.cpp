@@ -99,6 +99,26 @@ void TestHighPrecisionNumber(int n)
     cout<<Judge(test_data)<<'\n';
 }
 
+/**
+ * 基础排序算法，运行时间统计
+ * @param problemSize 问题规模
+ */
+void basicSortAlgorithmProblemSize(int problemSize){
+    cout<<"基础排序算法问题规模为："<<problemSize<<endl;
+    cout<<"选择排序算法时间消耗："<<endl;
+    TestSort<long long>(problemSize,Sort::SelectionSort<long long>);
+    cout<<"归并排序算法时间消耗："<<endl;
+    TestSort<long long>(problemSize,Sort::MergeSort<long long>);
+    cout<<"快速排序算法时间消耗："<<endl;
+    TestSort<long long>(problemSize,Sort::QuickSortForSimple<long long>);
+    cout<<"希尔排序算法时间消耗："<<endl;
+    TestSort<long long>(problemSize,Sort::ShellSort<long long>);
+    cout<<"基数排序算法时间消耗："<<endl;
+    TestSort<long long>(problemSize,Sort::RadixSort<long long>);
+
+}
+
+
 int main() {
 <<<<<<< HEAD
 //    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
