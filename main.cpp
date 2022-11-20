@@ -10,9 +10,9 @@
 #include <algorithm>
 #include "ExternSort.h"
 const unsigned int Fcount = 10000000; // 文件里数据的行数
-const unsigned int number_to_sort = 1000000; //在内存中一次排序的数量
-const char *unsort_file = "unsort_data.txt"; //原始未排序的文件名
-const char *sort_file = "sort_data.txt"; //已排序的文件名
+const unsigned int number_to_sort = 1000000; //在内存中�?次排序的数量
+const char *unsort_file = "unsort_data.txt"; //原始未排序的文件�?
+const char *sort_file = "sort_data.txt"; //已排序的文件�?
 void init_data(unsigned int num); //随机生成数据文件
 void init_data(unsigned int num)
 {
@@ -115,12 +115,10 @@ void basicSortAlgorithmProblemSize(int problemSize){
     TestSort<long long>(problemSize,Sort::ShellSort<long long>);
     cout<<"���������㷨ʱ�����ģ�"<<endl;
     TestSort<long long>(problemSize,Sort::RadixSort<long long>);
-
 }
 
 
 int main() {
-<<<<<<< HEAD
 //    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
 //    TestSort<long long>(1e6,Sort::QuickSort<long long>);
 //    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
@@ -129,15 +127,8 @@ int main() {
     init_data(Fcount);
     ExternSort extSort(unsort_file, sort_file, number_to_sort);
     extSort.sort();
-    system("pause");
-    return 0;
-=======
     cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
-    //TestSort<long long>(1e6,Sort::QuickSort<long long>);
-    TestSort<long long>(1e8, Sort::MultiThreadQuickSortByAsync<long long>);
-    //TestSort<long long>(1e6,Sort::QuickSortForSimple<long long>);
-    //TestSort<long long>(1e6,Sort::ShellSort<long long>);
-    //TestSort<long long>(1e4,Sort::SelectionSort<long long>);
->>>>>>> 1a2a4d3560500aabdd8e40e63b7e7c0d6dc167b3
+    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
+    basicSortAlgorithmProblemSize(1e4);
 }
 
