@@ -16,6 +16,17 @@ bool Judge(vector<T> &data)
     }
     return true;
 }
+void GenerateLongLongDataFile(int n)
+{
+    static default_random_engine random_engine;
+    ofstream out_stream("TestData.txt",ios::out);
+    static uniform_int_distribution<long long> random_range(LONG_LONG_MIN, LONG_LONG_MAX);
+    for(int i=0;i<n;i++)
+    {
+        out_stream<<random_range(random_engine)<<'\n';
+    }
+    out_stream.close();
+}
 void GenerateLongLongData(vector<long long>& data,int n)
 {
     data.resize(n);
@@ -91,8 +102,6 @@ void TestHighPrecisionNumber(int n)
 }
 
 int main() {
-//    TestHighPrecisionNumber(1e5);
-    TestSort<long long>(1e5,Sort::MergeSort<long long>);
-
+    GenerateLongLongDataFile(1e8);
 }
 
