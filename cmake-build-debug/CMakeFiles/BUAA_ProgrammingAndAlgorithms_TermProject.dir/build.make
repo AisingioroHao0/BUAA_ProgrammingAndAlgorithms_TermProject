@@ -43,19 +43,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "F:\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe"
+CMAKE_COMMAND = "E:\CLion 2022.2.1\bin\cmake\win\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "F:\CLion 2022.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f
+RM = "E:\CLion 2022.2.1\bin\cmake\win\bin\cmake.exe" -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject
+CMAKE_SOURCE_DIR = F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug
+CMAKE_BINARY_DIR = F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/depend.make
@@ -71,16 +71,16 @@ include CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/flags.make
 CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj: CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/flags.make
 CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj: ../main.cpp
 CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj: CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj"
-	F:\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj -MF CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.obj.d -o CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.obj -c C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj"
+	"E:\CLion 2022.2.1\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj -MF CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.obj.d -o CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.obj -c F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\main.cpp
 
 CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.i"
-	F:\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\main.cpp > CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.i
+	"E:\CLion 2022.2.1\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\main.cpp > CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.i
 
 CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.s"
-	F:\CLION2~1.4\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\main.cpp -o CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.s
+	"E:\CLion 2022.2.1\bin\mingw\bin\g++.exe" $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\main.cpp -o CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\main.cpp.s
 
 # Object files for target BUAA_ProgrammingAndAlgorithms_TermProject
 BUAA_ProgrammingAndAlgorithms_TermProject_OBJECTS = \
@@ -94,7 +94,7 @@ BUAA_ProgrammingAndAlgorithms_TermProject.exe: CMakeFiles/BUAA_ProgrammingAndAlg
 BUAA_ProgrammingAndAlgorithms_TermProject.exe: CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/linklibs.rsp
 BUAA_ProgrammingAndAlgorithms_TermProject.exe: CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/objects1.rsp
 BUAA_ProgrammingAndAlgorithms_TermProject.exe: CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable BUAA_ProgrammingAndAlgorithms_TermProject.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable BUAA_ProgrammingAndAlgorithms_TermProject.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -106,6 +106,6 @@ CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/clean:
 .PHONY : CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/clean
 
 CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug C:\Users\simon\Desktop\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug\CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug F:\Projects\BUAA_ProgrammingAndAlgorithms_TermProject\cmake-build-debug\CMakeFiles\BUAA_ProgrammingAndAlgorithms_TermProject.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/depend
 

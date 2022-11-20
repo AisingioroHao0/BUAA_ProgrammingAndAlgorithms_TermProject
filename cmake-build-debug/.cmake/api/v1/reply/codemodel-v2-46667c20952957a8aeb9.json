@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/simon/Desktop/BUAA_ProgrammingAndAlgorithms_TermProject/cmake-build-debug",
-		"source" : "C:/Users/simon/Desktop/BUAA_ProgrammingAndAlgorithms_TermProject"
+		"build" : "F:/Projects/BUAA_ProgrammingAndAlgorithms_TermProject/cmake-build-debug",
+		"source" : "F:/Projects/BUAA_ProgrammingAndAlgorithms_TermProject"
 	},
 	"version" : 
 	{

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/simon/Desktop/BUAA_ProgrammingAndAlgorithms_TermProject/main.cpp" "CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj" "gcc" "CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj.d"
+  "F:/Projects/BUAA_ProgrammingAndAlgorithms_TermProject/main.cpp" "CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj" "gcc" "CMakeFiles/BUAA_ProgrammingAndAlgorithms_TermProject.dir/main.cpp.obj.d"
   )
 
 # Targets to which this target links.

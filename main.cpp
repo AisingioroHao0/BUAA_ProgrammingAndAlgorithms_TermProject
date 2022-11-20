@@ -1,26 +1,8 @@
 #include <iostream>
-#include <vector>
 #include <random>
-#include <ctime>
 #include <fstream>
 #include "Sort.h"
-#include <ctime>
-#include <fstream>
 #include "HighPrecisionNumber.h"
-#include <algorithm>
-#include "ExternSort.h"
-const unsigned int Fcount = 10000000; // 鏂囦欢閲屾暟鎹殑琛屾暟
-const unsigned int number_to_sort = 1000000; //鍦ㄥ唴瀛樹腑涓?娆℃帓搴忕殑鏁伴噺
-const char *unsort_file = "unsort_data.txt"; //鍘熷鏈帓搴忕殑鏂囦欢鍚?
-const char *sort_file = "sort_data.txt"; //宸叉帓搴忕殑鏂囦欢鍚?
-void init_data(unsigned int num); //闅忔満鐢熸垚鏁版嵁鏂囦欢
-void init_data(unsigned int num)
-{
-    FILE* f = fopen(unsort_file, "wt");
-    for(int i = 0; i < num; ++i)
-        fprintf(f, "%d ", rand());
-    fclose(f);
-}
 using namespace std;
 template<typename T>
 bool Judge(vector<T> &data)
@@ -34,31 +16,23 @@ bool Judge(vector<T> &data)
     }
     return true;
 }
-
-template<typename T>
-void TestSort(int n,function<void(vector<T>&)> sort_function)
+void GenerateLongLongData(vector<long long>& data,int n)
 {
-    vector<long long > test_data(n);
+    data.resize(n);
     static default_random_engine random_engine;
     static uniform_int_distribution<long long> random_range(LONG_LONG_MIN, LONG_LONG_MAX);
     for(int i=0;i<n;i++)
     {
-        test_data[i]=random_range(random_engine);
+        data[i]=random_range(random_engine);
     }
-    auto start_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-    sort_function(test_data);
-    auto end_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-    cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
-    cout<<Judge(test_data)<<'\n';
 }
-
-void TestHighPrecisionNumber(int n)
+void GenerateHighPrecisionData(vector<HighPrecisionNumber> &data,int n)
 {
+    data.resize(n);
     static default_random_engine random_engine;
     static uniform_int_distribution<int> random_len(1, 100);
     static uniform_int_distribution<int> random_digit(0, 9);
     static uniform_int_distribution<int> random_is_positive(0, 1);
-    vector<HighPrecisionNumber> test_data(n);
     ofstream out_stream("HighPrecisionNumbers.txt",ios::out);
     for(int i=0;i<n;i++)
     {
@@ -91,44 +65,33 @@ void TestHighPrecisionNumber(int n)
                 res.push_back(random_digit(random_engine)+'0');
             }
         }
-        test_data[i]=res;
+        data[i]=res;
         out_stream<<res<<'\n';
     }
     out_stream.close();
+}
+template<typename T>
+void TestSort(int n,function<void(vector<T>&)> sort_function)
+{
+    vector<long long > test_data;
+    GenerateLongLongData(test_data,n);
+    auto start_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    sort_function(test_data);
+    auto end_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
+    cout<<Judge(test_data)<<'\n';
+}
+
+void TestHighPrecisionNumber(int n)
+{
+    vector<HighPrecisionNumber> test_data;
+    GenerateHighPrecisionData(test_data,n);
     Sort::MergeSort(test_data);
     cout<<Judge(test_data)<<'\n';
 }
 
-/**
- * 基础排序算法，运行时间统计
- * @param problemSize 问题规模
- */
-void basicSortAlgorithmProblemSize(int problemSize){
-    cout<<"基础排序算法问题规模为："<<problemSize<<endl;
-    cout<<"选择排序算法时间消耗："<<endl;
-    TestSort<long long>(problemSize,Sort::SelectionSort<long long>);
-    cout<<"归并排序算法时间消耗："<<endl;
-    TestSort<long long>(problemSize,Sort::MergeSort<long long>);
-    cout<<"快速排序算法时间消耗："<<endl;
-    TestSort<long long>(problemSize,Sort::QuickSortForSimple<long long>);
-    cout<<"希尔排序算法时间消耗："<<endl;
-    TestSort<long long>(problemSize,Sort::ShellSort<long long>);
-    cout<<"基数排序算法时间消耗："<<endl;
-    TestSort<long long>(problemSize,Sort::RadixSort<long long>);
-}
-
-
 int main() {
-//    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
-//    TestSort<long long>(1e6,Sort::QuickSort<long long>);
-//    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
-//    TestSort<long long>(1e6,Sort::QuickSortForSimple<long long>);
-    srand(time(NULL));
-    init_data(Fcount);
-    ExternSort extSort(unsort_file, sort_file, number_to_sort);
-    extSort.sort();
-    cout<<"hardware_concurrency:"<<thread::hardware_concurrency()<<'\n';
-    TestSort<long long>(1e6, Sort::MultiThreadQuickSortByAsync<long long>);
-    basicSortAlgorithmProblemSize(1e4);
+//    TestHighPrecisionNumber(1e5);
+    TestSort<long long>(1e5,Sort::MultiThreadQuickSortByAsync<long long>);
 }
 
