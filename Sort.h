@@ -200,7 +200,7 @@ void Sort::QuickSortSimple(std::vector<T> &data, long long begin, long long end)
 
 template<typename T>
 void Sort::RadixSort(std::vector<T> &data) {
-    std::vector<int> tmp[10];
+    std::vector<T> tmp[10];
     int k = 0;
     T max_element = data[0];
     for (int i = 1; i < data.size(); i++) {
@@ -214,7 +214,8 @@ void Sort::RadixSort(std::vector<T> &data) {
     } else {
         k = 1;
     }
-    for (int i = 1, x = 1; i <= k; i++, x *= 10) {
+    T x=1;
+    for (int i = 1; i <= k; i++, x *= 10) {
         for (int j = 0; j < data.size(); j++) {
             int v = (data[j] / x) % 10;
             tmp[v].push_back(data[j]);

@@ -92,6 +92,7 @@ void TestHighPrecisionNumber(int n)
 
 int main() {
 //    TestHighPrecisionNumber(1e5);
-    TestSort<long long>(1e5,Sort::MultiThreadQuickSortByAsync<long long>);
+    TestSort<long long>(1e5,Sort::MergeSort<long long>);
+
 }
 
