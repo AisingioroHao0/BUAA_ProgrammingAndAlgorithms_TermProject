@@ -43,9 +43,6 @@ public:
     static void MultiThreadMergeSortByAsync(std::vector<T> &data);
 
     template<typename T>
-    static void MultiThreadShellSortByAsync(std::vector<T> &data);
-
-    template<typename T>
     static void ExternSort(char *input_file, char * out_file, int count);
 
 };
@@ -359,11 +356,6 @@ static void multi_thread_shell_sort_by_async(std::vector<T> &data, int n) {
     }
 }
 
-template<typename T>
-void Sort::MultiThreadShellSortByAsync(std::vector<T> &data) {
-    auto res = std::async(std::launch::async, multi_thread_shell_sort_by_async<T>, std::ref(data), 0, data.size() - 1);
-    res.get();
-}
 
 
 #endif //BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
