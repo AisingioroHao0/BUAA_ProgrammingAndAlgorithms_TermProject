@@ -116,7 +116,83 @@ O(nlogn)
 
 对于给定的n个d位数，取值范围为[0,k]，我们使用计数排序比较元素的每一位，基数排序耗时Θ(n+k)，那么基数排序的复杂度为Θ(d(n+k))。
 
+## 高精度排序
 
+### 核心思想
+
+利用两个字符串存储高精度数字，一个字符串存储小数，一个字符串存储整数，一个bool值标识正负，重载运算符，使其兼容排序算法。
+
+```cpp
+class HighPrecisionNumber {
+    bool is_positive= true;
+    std::string interger,decimal;
+public:
+    HighPrecisionNumber(){}
+    HighPrecisionNumber(const std::string& x) {
+        int l = 0, r = x.size() - 1;
+        if (x.size() && x[0] == '-') {
+            is_positive = false;
+            l = 1;
+        }
+        for (int i = l; i <= r; i++) {
+            if (x[i] == '.') {
+                interger = x.substr(l, i - l);//i-1-l+1
+                decimal = x.substr(i + 1, r - i);//r-(i+1)+1
+                break;
+            }
+        }
+        if (interger.empty() && decimal.empty()) {
+            interger = x.substr(l, r - l + 1);
+        }
+    }
+    bool operator >(const HighPrecisionNumber& x)const {
+        if (is_positive && !x.is_positive) {
+            return true;
+        }
+        if (!is_positive && x.is_positive) {
+            return false;
+        }
+        bool res;
+        if (interger.size() > x.interger.size()) {
+            res = true;
+        } else if (interger.size() < x.interger.size()) {
+            res = false;
+        } else {
+            if (interger > x.interger) {
+                res = true;
+            } else if (interger < x.interger) {
+                res = false;
+            } else {
+                for (int i = 0; i < decimal.size(); i++) {
+                    if (i < x.decimal.size()) {
+                        if (decimal[i] > x.decimal[i]) {
+                            res = true;
+                            break;
+                        } else if (decimal[i] < x.decimal[i]) {
+                            res = false;
+                            break;
+                        }
+                    } else {
+                        res = true;
+                        break;
+                    }
+                }
+                return false;
+            }
+        }
+        if (!is_positive) {
+            res = !res;
+        }
+        return res;
+    }
+};
+```
+
+### 实验结果
+
+- 分布式归并排序，1e6数据，101位整数，101位小数
+
+  ![image-20221121213127207](README.assets/image-20221121213127207.png)
 
 ## 分布式排序
 
@@ -125,8 +201,16 @@ O(nlogn)
 | 排序种类\数据规模 | 1e6   | 1e7    | 1e8     | 1e9      |
 | ----------------- | ----- | ------ | ------- | -------- |
 | 普通快速排序      | 396ms | 4635ms | 53719ms | 594666ms |
-| 分布式快速排序    | 102ms | 831ms  | 9594ms  | 104291ms |
+| 分布式快速排序    | 102ms | 831ms  | 8874ms  | 104291ms |
 | 分布式归并排序    | 83ms  | 729ms  | 7448ms  | 77042ms  |
+
+## 核心思想
+
+根据当前的硬件最高并发线程数，计算出每个线程应处理的数据规模，每个任务节点判断当前处理的规模是否有必要划分新的线程解决子任务。
+
+若硬件并发数为4，线程执行函数图应如下所示，更多的线程可依此类推。
+
+![image-20221121205324213](README.assets/image-20221121205324213.png)
 
 ### 分布式快速排序
 
@@ -180,7 +264,7 @@ void Sort::QuickSortMultiThreadByAsync(std::vector<T> &data) {
 
 - 1e8
 
-  ![image-20221114234145665](README.assets/image-20221114234145665.png)
+  ![image-20221121213332516](README.assets/image-20221121213332516.png)
 
 - 1e9
 
