@@ -93,21 +93,31 @@ void TestHighPrecisionNumber(int n) {
 }
 
 /**
- * »ù´¡ÅÅÐòËã·¨£¬ÔËÐÐÊ±¼äÍ³¼Æ
- * @param problemSize ÎÊÌâ¹æÄ£
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Í³ï¿½ï¿½
+ * @param problemSize ï¿½ï¿½ï¿½ï¿½ï¿½Ä£
  */
 void basicSortAlgorithmProblemSize(int problemSize){
-    cout<<"»ù´¡ÅÅÐòËã·¨ÎÊÌâ¹æÄ£Îª£º"<<problemSize<<endl;
-    //cout<<"Ñ¡ÔñÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
+    cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Îªï¿½ï¿½"<<problemSize<<endl;
+    //cout<<"Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
     //TestSort<long long>(problemSize,Sort::SelectionSort<long long>);
-    cout<<"¹é²¢ÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
+    cout<<"ï¿½é²¢ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
     TestSort<long long>(problemSize,Sort::MergeSort<long long>);
-    cout<<"¿ìËÙÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
+    cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
     TestSort<long long>(problemSize,Sort::QuickSortForSimple<long long>);
-    cout<<"Ï£¶ûÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
+    cout<<"Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
     TestSort<long long>(problemSize,Sort::ShellSort<long long>);
 }
 
+
+
+void TestExternSort(int n)//created by hjz
+{
+    GenerateLongLongDataFile(1e7);
+    auto start_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    Sort::ExternSort<long long>("TestData.txt","OutData.txt",number_to_sort);
+    auto end_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
+}
 
 int main() {
 //    basicSortAlgorithmProblemSize(1e8);
