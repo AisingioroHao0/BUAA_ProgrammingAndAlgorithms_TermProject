@@ -39,7 +39,7 @@
    总的时间复杂度为O(n^2)
 
 
-##### 归并排序
+#### 归并排序
 归并排序算法实现排序的思路是：
 1. 将整个待排序序列划分成多个不可再分的子序列，每个子序列中仅有 1 个元素；
 2. 所有的子序列进行两两合并，合并过程中完成排序操作，最终合并得到的新序列就是有序序列。
@@ -122,19 +122,53 @@ O(nlogn)
 
 ### 对比图
 
-| 排序种类\数据规模                     | 1e5  | 1e6   | 1e7    | 1e8     | 1e9      |
-| ------------------------------------- | ---- | ----- | ------ | ------- | -------- |
-| 普通快速排序                          | 33ms | 396ms | 4635ms | 53719ms | 594666ms |
-| 无锁分布式快速排序，基于future与async | 11ms | 102ms | 831ms  | 9594ms  | 104291ms |
-|                                       |      |       |        |         |          |
+| 排序种类\数据规模 | 1e6   | 1e7    | 1e8     | 1e9      |
+| ----------------- | ----- | ------ | ------- | -------- |
+| 普通快速排序      | 396ms | 4635ms | 53719ms | 594666ms |
+| 分布式快速排序    | 102ms | 831ms  | 9594ms  | 104291ms |
+| 分布式归并排序    | 83ms  | 729ms  | 7448ms  | 77042ms  |
 
-### 无锁分布式快速排序
+### 分布式快速排序
+
+#### 核心代码
+
+```cpp
+static int single_task_len;
+template<typename T>
+static void quick_sort_multi_thread_by_async(std::vector<T> &data, int l, int r) {
+    if (l < r) {
+        std::swap(data[l], data[l + rand() % (r - l + 1)]);
+        int bound1 = l, bound2 = r + 1, i = l + 1;
+        while (i < bound2) {
+            if (data[i] < data[l]) {
+                std::swap(data[i], data[++bound1]);
+                i++;
+            } else if (data[i] > data[l]) {
+                std::swap(data[i], data[--bound2]);
+            } else {
+                i++;
+            }
+        }
+        std::swap(data[l], data[bound1]);
+        if (bound1 - l + r - bound2 + 1 > single_task_len) {
+            auto res = std::async(quick_sort_multi_thread_by_async<T>, std::ref(data), l, bound1 - 1);
+            quick_sort_multi_thread_by_async(data, bound2, r);
+            res.get();
+        } else {
+            quick_sort_multi_thread_by_async(data, l, bound1 - 1);
+            quick_sort_multi_thread_by_async(data, bound2, r);
+        }
+    }
+}
+
+template<typename T>
+void Sort::QuickSortMultiThreadByAsync(std::vector<T> &data) {
+    single_task_len = data.size() / std::thread::hardware_concurrency();
+    quick_sort_multi_thread_by_async(data, 0, data.size() - 1);
+}
+```
 
 #### 实验结果
-
-- 1e5
-
-  ![image-20221115000222836](README.assets/image-20221115000222836.png)
 
 - 1e6
 
@@ -151,3 +185,66 @@ O(nlogn)
 - 1e9
 
   ![image-20221115000051316](README.assets/image-20221115000051316.png)
+
+### 分布式归并排序
+
+#### 核心代码
+
+```cpp
+template<typename T>
+void Sort::MergeSortMultiThreadByAsync(std::vector<T> &data) {
+    std::vector<T> MergeSortBuffer(data.size());
+    single_task_len = data.size() / std::thread::hardware_concurrency();
+    static std::function<void(int l, int r)> merge_sort = [&data, &MergeSortBuffer](int l, int r) {
+        if (l >= r)return;
+        int mid = (l + r) / 2;
+        if (r - l + 1 >= single_task_len) {
+            auto res = std::async(merge_sort, l, mid);
+            merge_sort(mid + 1, r);
+            res.get();
+        } else {
+            merge_sort(l, mid);
+            merge_sort(mid + 1, r);
+        }
+        int i = l, j = mid + 1, p = l;
+        while (i <= mid && j <= r) {
+            if (data[i] > data[j]) {
+                MergeSortBuffer[p++] = data[j++];
+            } else {
+                MergeSortBuffer[p++] = data[i++];
+            }
+        }
+        while (i <= mid) {
+            MergeSortBuffer[p++] = data[i++];
+        }
+        while (j <= r) {
+            MergeSortBuffer[p++] = data[j++];
+        }
+        for (i = l; i <= r; i++) {
+            data[i] = MergeSortBuffer[i];
+        }
+    };
+    if (MergeSortBuffer.size() < data.size()) {
+        MergeSortBuffer.resize(data.size());
+    }
+    merge_sort(0, data.size() - 1);
+}
+```
+
+#### 实验结果
+
+- 1e6
+
+  ![image-20221121202901089](README.assets/image-20221121202901089.png)
+
+- 1e7
+
+  ![image-20221121195501270](README.assets/image-20221121195501270.png)
+
+- 1e8
+
+  ![image-20221121194611442](README.assets/image-20221121194611442.png)
+
+- 1e9
+
+  ![image-20221121193400661](README.assets/image-20221121193400661.png)
