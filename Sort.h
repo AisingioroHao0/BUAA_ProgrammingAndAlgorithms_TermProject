@@ -43,9 +43,8 @@ public:
     static void MergeSortMultiThreadByAsync(std::vector<T> &data);
 
     template<typename T>
-    static void ExternSort(char *input_file, char * out_file, int count);
-
-;
+    static void ExternSort(char *input_file, char *out_file, int count);
+};
 
 template<typename T>
 /**
@@ -68,9 +67,10 @@ void Sort::SelectionSort(std::vector<T> &data) {
         std::swap(data[i], data[min]);
     }
 }
+
 template<typename T>
 void Sort::ExternSort(char *input_file, char *out_file, int count) {
-    class ExternSort extSort("TestData.txt","SortedData.txt",number_to_sort);
+    class ExternSort extSort("TestData.txt", "SortedData.txt", number_to_sort);
     extSort.sort();
 }
 
@@ -220,7 +220,7 @@ void Sort::RadixSort(std::vector<T> &data) {
     } else {
         k = 1;
     }
-    T x=1;
+    T x = 1;
     for (int i = 1; i <= k; i++, x *= 10) {
         for (int j = 0; j < data.size(); j++) {
             int v = (data[j] / x) % 10;
@@ -297,18 +297,15 @@ void Sort::QuickSortMultiThreadByAsync(std::vector<T> &data) {
 template<typename T>
 void Sort::MergeSortMultiThreadByAsync(std::vector<T> &data) {
     std::vector<T> MergeSortBuffer(data.size());
-    single_task_len=data.size()/std::thread::hardware_concurrency();
+    single_task_len = data.size() / std::thread::hardware_concurrency();
     static std::function<void(int l, int r)> merge_sort = [&data, &MergeSortBuffer](int l, int r) {
         if (l >= r)return;
         int mid = (l + r) / 2;
-        if(r-l+1>=single_task_len)
-        {
-            auto res=std::async(merge_sort,l,mid);
-            merge_sort(mid+1,r);
+        if (r - l + 1 >= single_task_len) {
+            auto res = std::async(merge_sort, l, mid);
+            merge_sort(mid + 1, r);
             res.get();
-        }
-        else
-        {
+        } else {
             merge_sort(l, mid);
             merge_sort(mid + 1, r);
         }
@@ -335,8 +332,6 @@ void Sort::MergeSortMultiThreadByAsync(std::vector<T> &data) {
     }
     merge_sort(0, data.size() - 1);
 }
-
-
 
 
 #endif //BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H
