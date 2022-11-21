@@ -38,7 +38,7 @@ void GenerateLongLongData(vector<long long> &data, int n) {
 void GenerateHighPrecisionData(vector<HighPrecisionNumber> &data, int n) {
     data.resize(n);
     static default_random_engine random_engine;
-    static uniform_int_distribution<int> random_len(1, 100);
+    static uniform_int_distribution<int> random_len(1, 101);
     static uniform_int_distribution<int> random_digit(0, 9);
     static uniform_int_distribution<int> random_is_positive(0, 1);
     ofstream out_stream("HighPrecisionNumbers.txt", ios::out);
@@ -85,10 +85,13 @@ void TestSort(int n, function<void(vector<T> &)> sort_function) {
     cout << Judge(test_data) << '\n';
 }
 
-void TestHighPrecisionNumber(int n) {
+void TestHighPrecisionNumber(int n,function<void(vector<HighPrecisionNumber> &)> sort_function) {
     vector<HighPrecisionNumber> test_data;
     GenerateHighPrecisionData(test_data, n);
-    Sort::MergeSort(test_data);
+    auto start_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    sort_function(test_data);
+    auto end_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
     cout << Judge(test_data) << '\n';
 }
 
@@ -121,6 +124,7 @@ void TestExternSort(int n)//created by hjz
 
 int main() {
 //    basicSortAlgorithmProblemSize(1e8);
-    TestSort<long long>(1e7, Sort::MergeSortMultiThreadByAsync<long long>);
+ //   TestSort<long long>(1e6, Sort::QuickSortMultiThreadByAsync<long long>);
+//    TestHighPrecisionNumber(1e6,Sort::MergeSortMultiThreadByAsync<HighPrecisionNumber>);
 }
 
