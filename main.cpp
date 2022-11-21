@@ -93,18 +93,18 @@ void TestHighPrecisionNumber(int n) {
 }
 
 /**
- * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Í³ï¿½ï¿½
- * @param problemSize ï¿½ï¿½ï¿½ï¿½ï¿½Ä£
+ * »ù´¡ÅÅÐòËã·¨£¬ÔËÐÐÊ±¼äÍ³¼Æ
+ * @param problemSize ÎÊÌâ¹æÄ£
  */
 void basicSortAlgorithmProblemSize(int problemSize){
-    cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Îªï¿½ï¿½"<<problemSize<<endl;
-    //cout<<"Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
+    cout<<"»ù´¡ÅÅÐòËã·¨ÎÊÌâ¹æÄ£Îª£º"<<problemSize<<endl;
+    //cout<<"Ñ¡ÔñÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
     //TestSort<long long>(problemSize,Sort::SelectionSort<long long>);
-    cout<<"ï¿½é²¢ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
+    cout<<"¹é²¢ÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
     TestSort<long long>(problemSize,Sort::MergeSort<long long>);
-    cout<<"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
+    cout<<"¿ìËÙÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
     TestSort<long long>(problemSize,Sort::QuickSortForSimple<long long>);
-    cout<<"Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½"<<endl;
+    cout<<"Ï£¶ûÅÅÐòËã·¨Ê±¼äÏûºÄ£º"<<endl;
     TestSort<long long>(problemSize,Sort::ShellSort<long long>);
 }
 
@@ -121,6 +121,6 @@ void TestExternSort(int n)//created by hjz
 
 int main() {
 //    basicSortAlgorithmProblemSize(1e8);
-    TestSort<long long>(1e8, Sort::MergeSortMultiThreadByAsync<long long>);
+    TestSort<long long>(1e7, Sort::MergeSortMultiThreadByAsync<long long>);
 }
 
