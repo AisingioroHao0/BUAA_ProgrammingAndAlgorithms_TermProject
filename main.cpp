@@ -109,7 +109,19 @@ void basicSortAlgorithmProblemSize(int problemSize){
 }
 
 
+
+void TestExternSort(int n)//created by hjz
+{
+    GenerateLongLongDataFile(1e7);
+    auto start_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    Sort::ExternSort<long long>("TestData.txt","OutData.txt",number_to_sort);
+    auto end_time=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    cout<<"time cost:"<<end_time-start_time<<"ms"<<'\n';
+}
+
 int main() {
-    basicSortAlgorithmProblemSize(1e8);
+    //basicSortAlgorithmProblemSize(1e8);
+    TestSort<long long>(1e8,Sort::MergeSort<long long>);
+    TestSort<long long>(1e8,Sort::MergeSort<long long>);
 }
 

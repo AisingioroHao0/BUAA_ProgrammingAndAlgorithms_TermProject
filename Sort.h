@@ -10,6 +10,7 @@
 #include <thread>
 #include <future>
 #include "ThreadPool.h"
+#include "ExternSort.h"
 
 
 class Sort {
@@ -44,6 +45,9 @@ public:
     template<typename T>
     static void MultiThreadShellSortByAsync(std::vector<T> &data);
 
+    template<typename T>
+    static void ExternSort(char *input_file, char * out_file, int count);
+
 };
 
 template<typename T>
@@ -66,6 +70,11 @@ void Sort::SelectionSort(std::vector<T> &data) {
         //交换本趟排序的开始元素的下标和当前趟最小元素的下标的值
         std::swap(data[i], data[min]);
     }
+}
+template<typename T>
+void Sort::ExternSort(char *input_file, char *out_file, int count) {
+    class ExternSort extSort("TestData.txt","SortedData.txt",number_to_sort);
+    extSort.sort();
 }
 
 template<typename T>
