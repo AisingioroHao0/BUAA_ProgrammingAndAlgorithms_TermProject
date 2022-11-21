@@ -39,7 +39,7 @@ public:
     static void QuickSortMultiThreadByAsync(std::vector<T> &data);
 
     template<typename T>
-    static void MultiThreadMergeSortByAsync(std::vector<T> &data);
+    static void MergeSortMultiThreadByAsync(std::vector<T> &data);
 };
 
 template<typename T>
@@ -249,7 +249,7 @@ void Sort::ShellSort(std::vector<T> &data) {
     }
 }
 
-static int single_task_len_MTQSBA;
+static int single_task_len;
 
 template<typename T>
 static void quick_sort_multi_thread_by_async(std::vector<T> &data, int l, int r) {
@@ -267,7 +267,7 @@ static void quick_sort_multi_thread_by_async(std::vector<T> &data, int l, int r)
             }
         }
         std::swap(data[l], data[bound1]);
-        if (bound1 - l + r - bound2 + 1 > single_task_len_MTQSBA) {
+        if (bound1 - l + r - bound2 + 1 > single_task_len) {
             auto res = std::async(quick_sort_multi_thread_by_async<T>, std::ref(data), l, bound1 - 1);
             quick_sort_multi_thread_by_async(data, bound2, r);
             res.get();
@@ -280,47 +280,50 @@ static void quick_sort_multi_thread_by_async(std::vector<T> &data, int l, int r)
 
 template<typename T>
 void Sort::QuickSortMultiThreadByAsync(std::vector<T> &data) {
-    single_task_len_MTQSBA = data.size() / std::thread::hardware_concurrency();
+    single_task_len = data.size() / std::thread::hardware_concurrency();
     quick_sort_multi_thread_by_async(data, 0, data.size() - 1);
 }
 
 template<typename T>
-static void merge(std::vector<T> &data, int l, int mid, int r) {
-    int i = l, j = mid + 1, k = 0; //mid+1为第2有序区第1个元素，j指向第1个元素
-    int *temp = new int[r - l + 1]; //temp数组暂存合并的有序序列
-    if (!temp) { //内存分配失败
-        //cout<<"error";
-        return;
-    }
-    while (i <= mid && j <= r) {
-        if (data[i] <= data[j]) //较小的先存入temp中
-            temp[k++] = data[i++];
-        else
-            temp[k++] = data[j++];
-    }
-    while (i <= mid)//若比较完之后，第一个有序区仍有剩余，则直接复制到t数组中
-        temp[k++] = data[i++];
-    while (j <= r)//同上
-        temp[k++] = data[j++];
-    for (i = l, k = 0; i <= r; i++, k++)
-        data[i] = temp[k];
-    delete[]temp;//删除指针，由于指向的是数组，必须用delete []
-}
-
-
-template<typename T>
-static void multi_thread_merge_sort_by_async(std::vector<T> &data, int l, int r) {
-    if (l < r) {
+void Sort::MergeSortMultiThreadByAsync(std::vector<T> &data) {
+    std::vector<T> MergeSortBuffer(data.size());
+    single_task_len=data.size()/std::thread::hardware_concurrency();
+    static std::function<void(int l, int r)> merge_sort = [&data, &MergeSortBuffer](int l, int r) {
+        if (l >= r)return;
         int mid = (l + r) / 2;
-        multi_thread_merge_sort_by_async(data, l, mid);
-        multi_thread_merge_sort_by_async(data, mid + 1, r);
-        merge(data, l, mid, r);
+        if(r-l+1>=single_task_len)
+        {
+            auto res=std::async(merge_sort,l,mid);
+            merge_sort(mid+1,r);
+            res.get();
+        }
+        else
+        {
+            merge_sort(l, mid);
+            merge_sort(mid + 1, r);
+        }
+        int i = l, j = mid + 1, p = l;
+        while (i <= mid && j <= r) {
+            if (data[i] > data[j]) {
+                MergeSortBuffer[p++] = data[j++];
+            } else {
+                MergeSortBuffer[p++] = data[i++];
+            }
+        }
+        while (i <= mid) {
+            MergeSortBuffer[p++] = data[i++];
+        }
+        while (j <= r) {
+            MergeSortBuffer[p++] = data[j++];
+        }
+        for (i = l; i <= r; i++) {
+            data[i] = MergeSortBuffer[i];
+        }
+    };
+    if (MergeSortBuffer.size() < data.size()) {
+        MergeSortBuffer.resize(data.size());
     }
-}
-
-template<typename T>
-void Sort::MultiThreadMergeSortByAsync(std::vector<T> &data) {
-    multi_thread_merge_sort_by_async(data,0,data.size()-1);
+    merge_sort(0, data.size() - 1);
 }
 
 

@@ -110,6 +110,7 @@ void basicSortAlgorithmProblemSize(int problemSize){
 
 
 int main() {
-    basicSortAlgorithmProblemSize(1e8);
+//    basicSortAlgorithmProblemSize(1e8);
+    TestSort<long long>(1e8, Sort::MergeSortMultiThreadByAsync<long long>);
 }
 
