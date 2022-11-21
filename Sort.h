@@ -36,14 +36,10 @@ public:
     static void RadixSort(std::vector<T> &data);
 
     template<typename T>
-    static void MultiThreadQuickSortByAsync(std::vector<T> &data);
+    static void QuickSortMultiThreadByAsync(std::vector<T> &data);
 
     template<typename T>
     static void MultiThreadMergeSortByAsync(std::vector<T> &data);
-
-    template<typename T>
-    static void MultiThreadShellSortByAsync(std::vector<T> &data);
-
 };
 
 template<typename T>
@@ -256,7 +252,7 @@ void Sort::ShellSort(std::vector<T> &data) {
 static int single_task_len_MTQSBA;
 
 template<typename T>
-static void multi_thread_quick_sort_by_async(std::vector<T> &data, int l, int r) {
+static void quick_sort_multi_thread_by_async(std::vector<T> &data, int l, int r) {
     if (l < r) {
         std::swap(data[l], data[l + rand() % (r - l + 1)]);
         int bound1 = l, bound2 = r + 1, i = l + 1;
@@ -272,20 +268,20 @@ static void multi_thread_quick_sort_by_async(std::vector<T> &data, int l, int r)
         }
         std::swap(data[l], data[bound1]);
         if (bound1 - l + r - bound2 + 1 > single_task_len_MTQSBA) {
-            auto res = std::async(multi_thread_quick_sort_by_async<T>, std::ref(data), l, bound1 - 1);
-            multi_thread_quick_sort_by_async(data, bound2, r);
+            auto res = std::async(quick_sort_multi_thread_by_async<T>, std::ref(data), l, bound1 - 1);
+            quick_sort_multi_thread_by_async(data, bound2, r);
             res.get();
         } else {
-            multi_thread_quick_sort_by_async(data, l, bound1 - 1);
-            multi_thread_quick_sort_by_async(data, bound2, r);
+            quick_sort_multi_thread_by_async(data, l, bound1 - 1);
+            quick_sort_multi_thread_by_async(data, bound2, r);
         }
     }
 }
 
 template<typename T>
-void Sort::MultiThreadQuickSortByAsync(std::vector<T> &data) {
+void Sort::QuickSortMultiThreadByAsync(std::vector<T> &data) {
     single_task_len_MTQSBA = data.size() / std::thread::hardware_concurrency();
-    multi_thread_quick_sort_by_async(data, 0, data.size() - 1);
+    quick_sort_multi_thread_by_async(data, 0, data.size() - 1);
 }
 
 template<typename T>
@@ -311,6 +307,7 @@ static void merge(std::vector<T> &data, int l, int mid, int r) {
     delete[]temp;//删除指针，由于指向的是数组，必须用delete []
 }
 
+
 template<typename T>
 static void multi_thread_merge_sort_by_async(std::vector<T> &data, int l, int r) {
     if (l < r) {
@@ -323,38 +320,10 @@ static void multi_thread_merge_sort_by_async(std::vector<T> &data, int l, int r)
 
 template<typename T>
 void Sort::MultiThreadMergeSortByAsync(std::vector<T> &data) {
-    auto res = std::async(std::launch::async, multi_thread_merge_sort_by_async<T>, std::ref(data), 0, data.size() - 1);
-    res.get();
+    multi_thread_merge_sort_by_async(data,0,data.size()-1);
 }
 
 
-template<typename T>
-static void multi_thread_shell_sort_by_async(std::vector<T> &data, int n) {
-    int i, j, gap;   // gap为步长，每次减为原来的一半。
-    for (gap = n / 2; gap > 0; gap /= 2) {
-        // 共gap个组，对每一组都执行直接插入排序
-        for (i = 0; i < gap; i++) {
-            for (j = i + gap; j < n; j += gap) {
-
-                if (data[j] < data[j - gap]) {
-                    int tmp = data[j];
-                    int k = j - gap;
-                    while (k >= 0 && data[k] > tmp) {
-                        data[k + gap] = data[k];
-                        k -= gap;
-                    }
-                    data[k + gap] = tmp;
-                }
-            }
-        }
-    }
-}
-
-template<typename T>
-void Sort::MultiThreadShellSortByAsync(std::vector<T> &data) {
-    auto res = std::async(std::launch::async, multi_thread_shell_sort_by_async<T>, std::ref(data), 0, data.size() - 1);
-    res.get();
-}
 
 
 #endif //BUAA_PROGRAMMINGANDALGORITHMS_TERMPROJECT_SORT_H

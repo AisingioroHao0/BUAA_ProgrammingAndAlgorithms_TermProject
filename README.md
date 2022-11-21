@@ -1,8 +1,7 @@
-# buaa_ProgrammingAndAlgorithms_TermProject
+# BUAA_ProgrammingAndAlgorithms_TermProject
 
+## 基础排序
 
-
-##基础排序
 ### 对比图
 
 | 排序种类\数据规模 | 1e5 | 1e6       | 1e7    | 1e8      | 1e9      |
@@ -37,7 +36,7 @@
    第一层循环：依次遍历序列当中的每一个元素
    第二层循环：将遍历得到的当前元素依次与余下的元素进行比较，符合最小元素的条件，则交换。
    ![selectionSort](README.assets/selectionSort.gif)
-总的时间复杂度为O(n^2)
+   总的时间复杂度为O(n^2)
 
 
 ##### 归并排序
