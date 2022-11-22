@@ -37,7 +37,7 @@ public:
     static void RadixSort(std::vector<T> &data);
 
     template<typename T>
-    static void QuickSortMultiThreadByAsync(std::vector<T> &data);
+    static void QuickSortMultiThreadByAsync(std::vector<T> &data,int thread_num);
 
     template<typename T>
     static void MergeSortMultiThreadByAsync(std::vector<T> &data);
@@ -291,8 +291,8 @@ static void quick_sort_multi_thread_by_async(std::vector<T> &data, int l, int r)
 }
 
 template<typename T>
-void Sort::QuickSortMultiThreadByAsync(std::vector<T> &data) {
-    single_task_len = data.size() / std::thread::hardware_concurrency();
+void Sort::QuickSortMultiThreadByAsync(std::vector<T> &data,int thread_num) {
+    single_task_len = data.size() / thread_num;
     quick_sort_multi_thread_by_async(data, 0, data.size() - 1);
 }
 
