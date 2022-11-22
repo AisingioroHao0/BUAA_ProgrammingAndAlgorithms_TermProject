@@ -43,6 +43,8 @@ public:
     static void MergeSortMultiThreadByAsync(std::vector<T> &data);
 
     template<typename T>
+    static void MultiMergeSort_MultiThread(std::vector<T> &data);
+    template<typename T>
     static void ExternSort(char *input_file, char *out_file, int count);
 };
 
@@ -331,6 +333,67 @@ void Sort::MergeSortMultiThreadByAsync(std::vector<T> &data) {
         MergeSortBuffer.resize(data.size());
     }
     merge_sort(0, data.size() - 1);
+}
+
+template<typename T>
+void Sort::MultiMergeSort_MultiThread(std::vector<T> &data) {
+    int n=std::thread::hardware_concurrency(),m=data.size()/n;
+    std::vector<T> merge_sort_buffer(data.size());
+    static std::function<void(int l, int r)> merge_sort = [&data, &merge_sort_buffer](int l, int r) {
+        if (l >= r)return;
+        int mid = (l + r) / 2;
+        merge_sort(l, mid);
+        merge_sort(mid + 1, r);
+        int i = l, j = mid + 1, p = l;
+        while (i <= mid && j <= r) {
+            if (data[i] > data[j]) {
+                merge_sort_buffer[p++] = data[j++];
+            } else {
+                merge_sort_buffer[p++] = data[i++];
+            }
+        }
+        while (i <= mid) {
+            merge_sort_buffer[p++] = data[i++];
+        }
+        while (j <= r) {
+            merge_sort_buffer[p++] = data[j++];
+        }
+        for (i = l; i <= r; i++) {
+            data[i] = merge_sort_buffer[i];
+        }
+    };
+    std::vector<std::thread> threads;
+    for(int i=0;i<n-1;i++)
+    {
+        threads.emplace_back(std::thread(merge_sort,i*m,i*m+m-1));
+    }
+    threads.emplace_back(std::thread(merge_sort,(n-1)*m,data.size()-1));
+    for(int i=0;i<n;i++)
+    {
+        threads[i].join();
+    }
+    std::priority_queue<std::pair<T,std::pair<int,int> >,std::vector<std::pair<T,std::pair<int,int> > >,std::greater<std::pair<T,std::pair<int,int> > > > q;
+    for(int i=0;i<n-1;i++)
+    {
+        q.push({data[i*m],{i*m,i*m+m-1}});
+    }
+    q.push({data[(n-1)*m],{(n-1)*m,data.size()-1}});
+    int p=0;
+    while(!q.empty())
+    {
+        T val=q.top().first;
+        int index=q.top().second.first,max_index=q.top().second.second;
+        q.pop();
+        merge_sort_buffer[p++]=val;
+        if(index+1<=max_index)
+        {
+            q.push({data[index + 1], {index + 1,max_index}});
+        }
+    }
+    for(int i=0;i<data.size();i++)
+    {
+        data[i]=merge_sort_buffer[i];
+    }
 }
 
 

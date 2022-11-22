@@ -124,7 +124,11 @@ void TestExternSort(int n)//created by hjz
 
 int main() {
 //    basicSortAlgorithmProblemSize(1e8);
- //   TestSort<long long>(1e6, Sort::QuickSortMultiThreadByAsync<long long>);
+//    TestSort<long long>(1e8, Sort::QuickSortMultiThreadByAsync<long long>);
 //    TestHighPrecisionNumber(1e6,Sort::MergeSortMultiThreadByAsync<HighPrecisionNumber>);
+//    TestSort<long long>(1e6,Sort::QuickSort<long long>);
+//    TestSort<long long>(1e6,Sort::QuickSortForSimple<long long>);
+    TestSort<long long>(1e7,Sort::MultiMergeSort_MultiThread<long long>);
+
 }
 
